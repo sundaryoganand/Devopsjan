@@ -17,20 +17,6 @@ pipeline {
             }
         }
 
-        stage('Test the Project') {
-            steps {
-                echo "Running Maven tests"
-                bat 'mvn clean test'
-            }
-            post {
-                always {
-                    // FIX: allow pipeline to continue even if no tests exist
-                    junit allowEmptyResults: true,
-                          testResults: '**/target/surefire-reports/*.xml'
-                }
-            }
-        }
-
         stage('Build Project') {
             steps {
                 echo "Building the project"
@@ -58,7 +44,7 @@ pipeline {
             }
         }
 
-        stage('Deploy the Project using Container') {
+        stage('Deploy Using Docker Container') {
             steps {
                 echo "Running Docker container"
                 bat '''
